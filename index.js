@@ -19,7 +19,7 @@ app.use('/public', express.static(`/public`));
 let resMap = new Map();
 
 app.get('/', function(req, res) {
-  res.sendFile(process.cwd() + '/views/index.html');
+  res.sendFile("/views/index.html");
 });
 
 // Your first API endpoint
