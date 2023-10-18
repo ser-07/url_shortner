@@ -2,9 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
+var path = require("path");
 
 //Adding body parser config:
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Basic Configuration
@@ -21,6 +22,19 @@ let resMap = new Map();
 app.get("/", function (req, res) {
   res.sendFile(process.cwd() + "/views/index.html");
 });
+
+// adding test routes to check vercel compatibility:
+
+app.get("/vercel1", function (req, res) {
+  res.sendFile("/views/index.html");
+});
+
+app.get("/vercel2", function (req, res) {
+  res.sendFile(path.join(process.cwd(), "/views/index.html"));
+});
+
+
+
 
 // Your first API endpoint
 app.get('/api/hello', function(req, res) {
