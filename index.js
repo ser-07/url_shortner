@@ -13,8 +13,9 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 console.log("Process CWD", process.cwd());
-app.use("/public", express.static(`${process.cwd()}/public`));
-// app.use('/public', express.static(`/public`));
+// app.use("/public", express.static(`${process.cwd()}/public`)); //#1
+//Removing process.cwd before uploading to vercel. Comment line #2 and uncomment #1 if running in local
+app.use("/public", express.static(path.join(process.cwd(),"public"))); //#2
 
 //storage
 let resMap = new Map();
@@ -25,13 +26,13 @@ app.get("/", function (req, res) {
 
 // adding test routes to check vercel compatibility:
 
-app.get("/vercel1", function (req, res) {
-  res.sendFile("/views/index.html");
-});
+// app.get("/vercel1", function (req, res) {
+//   res.sendFile("/views/index.html");
+// });
 
-app.get("/vercel2", function (req, res) {
-  res.sendFile(path.join(process.cwd(), "/views/index.html"));
-});
+// app.get("/vercel2", function (req, res) {
+//   res.sendFile(path.join(process.cwd(), "/views/index.html"));
+// });
 
 
 
