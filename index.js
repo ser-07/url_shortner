@@ -11,15 +11,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 app.use(cors());
-
-// app.use('/public', express.static(`${process.cwd()}/public`));
-app.use('/public', express.static(`/public`));
+console.log("Process CWD", process.cwd());
+app.use("/public", express.static(`${process.cwd()}/public`));
+// app.use('/public', express.static(`/public`));
 
 //storage
 let resMap = new Map();
 
-app.get('/', function(req, res) {
-  res.sendFile("/views/index.html");
+app.get("/", function (req, res) {
+  res.sendFile(process.cwd() + "/views/index.html");
 });
 
 // Your first API endpoint
