@@ -35,7 +35,7 @@ const isValidUrl = (urlString) => {
 
 app.get("/", function (req, res) {
   // res.sendFile(process.cwd() + "/views/index.html");
-  res.sendFile("./views/index.html");
+  res.sendFile(path.join(process.cwd(), "/views/index.html"));
 });
 
 // adding test routes to check vercel compatibility:
