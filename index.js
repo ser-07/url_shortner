@@ -20,6 +20,19 @@ app.use("/public", express.static(path.join(process.cwd(),"public"))); //#2
 //storage
 let resMap = new Map();
 
+const isValidUrl = (urlString) => {
+  var urlPattern = new RegExp(
+    "^(https?:\\/\\/)?" + // validate protocol
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // validate domain name
+      "((\\d{1,3}\\.){3}\\d{1,3}))" + // validate OR ip (v4) address
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // validate port and path
+      "(\\?[;&a-z\\d%_.~+=-]*)?" + // validate query string
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
+  ); // validate fragment locator
+  return !!urlPattern.test(urlString);
+};
+
 app.get("/", function (req, res) {
   res.sendFile(process.cwd() + "/views/index.html");
 });
@@ -44,6 +57,8 @@ app.get('/api/hello', function(req, res) {
 
 app.post('/api/shorturl', (req, res)=>{
   // console.log("Here", req.body.url);
+  if (!isValidUrl(req.body.url)) return res.json({ error: "invalid url" });
+  
   if(resMap.size === 0){
     resMap.set(req.body.url, resMap.size+1);
   }
